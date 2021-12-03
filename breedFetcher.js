@@ -1,23 +1,37 @@
 const request = require('request');
-const args = process.argv.splice(2);
 
-const breedFetcher = (args) => {
-  
-  request(`https://api.thecatapi.com/v1/breeds/search?q=${args[0]}`, (error, object) => {
+const fetchBreedDescription = function(breedName, callback) {
+  request(`https://api.thecatapi.com/v1/breeds/search?q=${breedName}`, (error, response, body) => {
+    const data = JSON.parse(body);
     if (error) {
-      console.log(error, 'Sorry, there\'s an issue');
+      callback('Sorry, there\'s an issue!', error);
       return;
     }
-    const data = JSON.parse(object.body);
     if (data.length === 0) {
-      console.log(error, 'Sorry, breed not found!');
+      callback('Sorry, breed not found!', null);
       return;
     }
-    console.log(data[0].description);
+    callback(null, data[0].description);
   });
 };
 
-breedFetcher(args); // Don't forget to pass in your arguments!!!
+module.exports = { fetchBreedDescription };
 
 
-//e.g ?q=sib to search for Siberian - https://api.thecatapi.com/v1/breeds/search?q=Siberian
+// const breedFetcher = (args) => {
+//   request(`https://api.thecatapi.com/v1/breeds/search?q=${args[0]}`, (error, object) => {
+//     if (error) {
+//       console.log(error, 'Sorry, there\'s an issue');
+//       return;
+//     }
+//     const data = JSON.parse(object.body);
+//     if (data.length === 0) {
+//       console.log(error, 'Sorry, breed not found!');
+//       return;
+//     }
+//     console.log(data[0].description);
+//   });
+// };
+
+// breedFetcher(args); // Don't forget to pass in your arguments!!!
+
