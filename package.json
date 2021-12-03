@@ -19,5 +19,8 @@
   "homepage": "https://github.com/ray-flores/json_the_cat#readme",
   "dependencies": {
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4"
   }
 }

@@ -4,11 +4,11 @@ const fetchBreedDescription = function(breedName, callback) {
   request(`https://api.thecatapi.com/v1/breeds/search?q=${breedName}`, (error, response, body) => {
     const data = JSON.parse(body);
     if (error) {
-      callback('Sorry, there\'s an issue!', error);
+      callback(error, 'Sorry, there\'s an issue!');
       return;
     }
     if (data.length === 0) {
-      callback('Sorry, breed not found!', null);
+      callback(null, 'Sorry, breed not found!');
       return;
     }
     callback(null, data[0].description);
